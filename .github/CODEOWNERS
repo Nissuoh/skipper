@@ -1,0 +1,21 @@
+# Every file has the maintainer as its owner. While there is one maintainer,
+# the review by a code owner is not required: an author cannot approve their
+# own pull request, so this file is informational. The ruleset asks for the
+# code-owner review once a co-maintainer exists (see docs/release-guide.md,
+# "Before the repository goes public"). The last matching line wins. The lines
+# below name the files that decide what is checked, built or promised, so a
+# change to them always shows up as a change to an owned path.
+* @Nissuoh
+
+/.github/ @Nissuoh
+/.cargo/ @Nissuoh
+/scan/ @Nissuoh
+/supply-chain/ @Nissuoh
+/tools/ @Nissuoh
+/xtask/ @Nissuoh
+/Cargo.lock @Nissuoh
+/Cargo.toml @Nissuoh
+/rust-toolchain.toml @Nissuoh
+/AGENTS.md @Nissuoh
+/GOVERNANCE.md @Nissuoh
+/SECURITY.md @Nissuoh

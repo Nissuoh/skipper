@@ -1,0 +1,169 @@
+# Supply-chain pins.
+# Read by `cargo xtask pin-check` (xtask/src/pins.rs); the [conpty] table is compiled into skipper-confine.
+# An empty string means "not set yet". Dates are release dates.
+
+[toolchain]
+channel = "1.99.1"
+host = "x86_64-pc-windows-gnu"
+released = 2026-10-15
+
+[tool.gitleaks]
+version = "8.30.1"
+asset = "gitleaks_8.30.1_windows_x64.zip"
+source = "https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_windows_x64.zip"
+size = 8438883
+sha256 = "d29144deff3a68aa93ced33dddf84b7fdc26070add4aa0f4513094c8332afc4e"
+# exe_sha256: SHA-256 of gitleaks.exe as extracted from the asset above (2026-10-22).
+exe_sha256 = "17157e2ee8b76fc8b1d8bee607a250e34b8a8023c8bc81822d4b5ee4d78fcb7c"
+released = 2026-03-21
+
+# One table per direct dependency: version (without "=") and release date from its crates.io page on the pin day.
+# Pin day 2026-10-22: every row checked against crates.io (none yanked); serde, serde_json, toml, sha2 and tokio chosen
+# then as the newest release at least 7 days old on 2026-10-27 (G7, G8, NB-11). A version carries its build metadata
+# as cargo locks it (toml).
+[crate.egui]
+version = "0.37.0"
+released = 2026-10-15
+
+[crate.eframe]
+version = "0.37.0"
+released = 2026-10-15
+
+[crate.egui_tiles]
+version = "0.18.0"
+released = 2026-10-19
+
+[crate.alacritty_terminal]
+version = "0.26.0"
+released = 2026-04-06
+
+[crate.portable-pty]
+version = "0.9.0"
+released = 2025-02-11
+
+[crate.windows-sys]
+version = "0.61.2"
+released = 2025-10-06
+
+[crate.mxc-sdk]
+version = "1.0.1"
+released = 2026-10-17
+
+[crate.rmcp]
+version = "3.6.0"
+released = 2026-10-20
+
+[crate.bollard]
+version = "0.21.1"
+released = 2026-08-16
+
+[crate.uuid]
+version = "1.28.0"
+released = 2026-10-10
+
+[crate.serde]
+version = "1.0.229"
+released = 2026-07-18
+
+[crate.serde_json]
+version = "1.0.154"
+released = 2026-10-11
+
+[crate.toml]
+version = "1.1.8+spec-1.1.0"
+released = 2026-10-09
+
+[crate.sha2]
+version = "0.11.1"
+released = 2026-10-12
+
+# crc32fast became a direct dependency of skipper-core in Stage 1 (the checksum of a board log line). The lock
+# already held it (flate2 uses it), so the registry set and its hash did not change. Release date checked on crates.io
+# on 2026-10-22: 2026-10-20, not yanked. Unlike egui_tiles, mxc-sdk and rmcp it has no [[waived]] entry: while the
+# owner's Stage 1 waiver (`[lock] seven_day_waiver`, S1 decision 1) stands, the 7-day wait is waived for the whole lock
+# and so for crc32fast. When that waiver ends at version 1, crc32fast 1.5.3 needs its own [[waived]] entry or a lock
+# resolved on 2026-10-27 or later.
+[crate.crc32fast]
+version = "1.5.3"
+released = 2026-10-20
+
+# tokio 1.54.1 (2026-10-21) would hold the lock back to 2026-10-28; 1.53.3 keeps 2026-10-27 (NB-11).
+[crate.tokio]
+version = "1.53.3"
+released = 2026-10-13
+
+# Stage 1 additions, checked against crates.io on 2026-10-22 (none yanked). pulldown-cmark moved from 0.13.4 to
+# 0.13.5 (released 2026-10-21) on 2026-10-23 with the owner's approval: 0.13.5 fixes panics and denial-of-service paths
+# that AI-written Markdown can reach. It is younger than 7 days on the resolution day, so pin-check passes it only under
+# an owner's waiver of the 7-day wait; without one the lock must be resolved again on 2026-10-28 or later.
+[crate.pulldown-cmark]
+version = "0.13.5"
+released = 2026-10-21
+
+[crate.egui_commonmark]
+version = "0.26.0"
+released = 2026-10-15
+
+[crate.egui_kittest]
+version = "0.37.0"
+released = 2026-10-15
+
+# unicode-segmentation became a direct dependency of skipper-core in FILTER-1 (GF-8: line cuts on grapheme
+# boundaries). The lock already held it, so the registry set and its hash did not change. Release date read on
+# crates.io on 2026-11-04: 2026-06-01, not yanked, its checksum the one Cargo.lock holds.
+[crate.unicode-segmentation]
+version = "1.13.3"
+released = 2026-06-01
+
+[lock]
+# Cargo.lock is judged by its registry packages only (Stage 1; MC-118, S1G-3): registry_sha256 is the SHA-256
+# over the lines "name<TAB>version<TAB>checksum<LF>" of every package whose source is crates.io, sorted by name and
+# version (any other registry or index is refused). A path package (the workspace's own crates) or a path edge brings
+# no third-party code, so adding one changes nothing here and restarts no wait; a new, removed or re-checksummed
+# registry package changes the hash, and `pin-check` then asks for a new resolved date and hash.
+# `resolved` is the day the registry packages last changed.
+# Resolved on 2026-10-22 by `skipper-cap fetch -- cargo update --workspace` on the main PC, in the box (NB-7), from the
+# index only (Stage 1): 488 registry packages (the 425 of Stage 0 unchanged, 63 added for egui_commonmark,
+# egui_kittest, pulldown-cmark and the eframe feature accesskit), no git source. On 2026-10-23, with the owner's
+# approval, `cargo update -p pulldown-cmark --precise 0.13.5` moved pulldown-cmark from 0.13.4 to 0.13.5 (only the
+# version and checksum of that package changed), so `resolved` is that day. After the owner's S1-DEPS yes of 2026-10-23
+# the 13 packages of the Windows graph were fetched (675,520 bytes); the other 50 are never downloaded.
+# The owner's whole-lock waiver of the Stage 0 start (NB-13) lapsed with this registry change. The owner waived the
+# 7-day wait again for Stage 1 until version 1 (S1 decision 1, 2026-10-22): the waiver below names this registry set by
+# its hash, so any later change of the registry packages voids it; at version 1 the two waiver lines are deleted.
+# The packages the Stage 0 waiver covered stay waived one by one in the [[waived]] entries below.
+resolved = 2026-10-23
+registry_sha256 = "6c47c2ff09e6036d9ad198f1e6c5db2720e3ca25c94ca40f30ce832b3bfdc154"
+seven_day_waiver = "owner, 2026-10-22: Stage 1 builds without the 7-day wait until version 1 (S1 decision 1)"
+seven_day_waiver_registry_sha256 = "6c47c2ff09e6036d9ad198f1e6c5db2720e3ca25c94ca40f30ce832b3bfdc154"
+
+# The registry packages the Stage 0 waiver covered, one entry each: the direct pins younger than 7 days when the lock
+# was resolved on 2026-10-22. The whole-lock waiver lapsed with the first new registry package (Stage 1), an
+# entry does not: it counts only while Cargo.lock holds this very name, version and checksum, and with another
+# checksum the 7-day rule applies to the package again.
+[[waived]]
+name = "egui_tiles"
+version = "0.18.0"
+checksum = "c08803282261f981e84f422b9f716450caee4c2a0301278e27aab721dff99218"
+reason = "owner, 2026-10-22: Stage 0 starts without the 7-day wait (NB-13)"
+date = 2026-10-22
+
+[[waived]]
+name = "mxc-sdk"
+version = "1.0.1"
+checksum = "7c9e2d05b3953fdb34c44e4de8d8f2b447f4444534cb95294b72fb297a468f61"
+reason = "owner, 2026-10-22: Stage 0 starts without the 7-day wait (NB-13)"
+date = 2026-10-22
+
+[[waived]]
+name = "rmcp"
+version = "3.6.0"
+checksum = "ceb42e9e47443cd83a834dea57b5816d35481417bae72ade5dc5615c59122e26"
+reason = "owner, 2026-10-22: Stage 0 starts without the 7-day wait (NB-13)"
+date = 2026-10-22
+
+[conpty]
+# Filled only after the OPEN-25 yes, from the downloaded package. Empty: a bundle is refused.
+conpty_dll_sha256 = ""
+openconsole_exe_sha256 = ""
+version = ""

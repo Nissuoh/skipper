@@ -1,0 +1,85 @@
+# cargo-deny configuration of Skipper.
+#
+# Tool: cargo-deny 0.20.2 (crates.io, built on the build machine with `cargo install --locked --offline --root
+# %LOCALAPPDATA%\skipper-build\tools`, never part of Skipper's own lock). Passed with `--config`, so no file lands in
+# the repository root. `cargo xtask supply` runs it offline as
+#   cargo deny --locked --offline check --config supply-chain/deny.toml licenses bans sources
+# The advisory check is cargo-audit's job there (RustSec copy, at most 7 days old); `yanked = "deny"` below is for a
+# manual `cargo deny check advisories` and is not part of the xtask run.
+
+# The graph that ships: the Windows GNU target, the same graph `cargo xtask deps-check` judges. The Linux, BSD, macOS,
+# UEFI and WASI only packages of the platform-wide lock are never in a binary and are never downloaded, so they
+# cannot be read here; cargo-vet exempts them (supply-chain/config.toml).
+[graph]
+targets = ["x86_64-pc-windows-gnu"]
+
+[advisories]
+version = 2
+yanked = "deny"
+ignore = []
+
+[licenses]
+version = 2
+# Exactly this list. A package whose licence expression cannot be met from it fails the check; widening
+# the list is a decision of the maintainer, written next to the reason.
+allow = [
+    "MIT",
+    "Apache-2.0",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "ISC",
+    "Zlib",
+    "Unicode-3.0",
+    "OFL-1.1",
+    # BSL-1.0 (the Boost Software License): clipboard-win 5.4.1 and error-code 3.4.0, the Windows clipboard that eframe's
+    # `clipboard` feature brings in through arboard. A permissive licence that allows shipping inside an MIT program and asks
+    # for no text in a binary; the notice list still names both crates.
+    "BSL-1.0",
+]
+confidence-threshold = 0.93
+# epaint_default_fonts 0.37.0 (egui's built-in fonts) is "(MIT OR Apache-2.0) AND OFL-1.1 AND Ubuntu-font-1.0" on
+# crates.io: the Ubuntu Font Licence is allowed for this one crate at this one version only, so a new version of the
+# crate (new fonts, maybe a new licence) fails the check until it is read again. The second id is the form that was
+# guessed (LicenseRef-UFL-1.0); it is harmless when unused. The fonts ship only when the `default_fonts` feature of
+# eframe is on; the licence text is then part of THIRD-PARTY-LICENSES.
+exceptions = [
+    { crate = "epaint_default_fonts@0.37.0", allow = ["Ubuntu-font-1.0", "LicenseRef-UFL-1.0"] },
+]
+
+[bans]
+# Duplicates are normal in a GUI tree (windows-sys, bitflags, ...); only the HTTP and TLS crates below must never exist
+# twice, and the C TLS stacks must never exist at all.
+multiple-versions = "allow"
+wildcards = "deny"
+allow-wildcard-paths = true
+highlight = "all"
+deny = [
+    { crate = "openssl" },
+    { crate = "openssl-sys" },
+    { crate = "native-tls" },
+    { crate = "reqwest", deny-multiple-versions = true },
+    { crate = "hyper", deny-multiple-versions = true },
+    { crate = "hyper-util", deny-multiple-versions = true },
+    { crate = "hyper-rustls", deny-multiple-versions = true },
+    { crate = "h2", deny-multiple-versions = true },
+    { crate = "http", deny-multiple-versions = true },
+    { crate = "rustls", deny-multiple-versions = true },
+    { crate = "rustls-webpki", deny-multiple-versions = true },
+    { crate = "tokio-rustls", deny-multiple-versions = true },
+    { crate = "webpki-roots", deny-multiple-versions = true },
+    { crate = "ureq", deny-multiple-versions = true },
+    { crate = "curl", deny-multiple-versions = true },
+    { crate = "curl-sys", deny-multiple-versions = true },
+    { crate = "isahc", deny-multiple-versions = true },
+    { crate = "attohttpc", deny-multiple-versions = true },
+]
+
+[sources]
+# Only crates.io: no git dependency, no foreign registry.
+unknown-registry = "deny"
+unknown-git = "deny"
+allow-registry = [
+    "https://github.com/rust-lang/crates.io-index",
+    "sparse+https://index.crates.io/",
+]
+allow-git = []

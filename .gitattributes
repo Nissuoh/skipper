@@ -1,0 +1,5 @@
+# Store text files with LF line endings and check them out with LF on every
+# platform, so diffs stay clean between Windows and Linux contributors.
+* text=auto eol=lf
+# Raw icon pixels (crates/skipper-app/assets/icon/*.rgba): bytes, never text, so no line-ending change can touch them.
+*.rgba binary

@@ -1,0 +1,69 @@
+name: Bug report
+description: Report a bug in a released build of Skipper. No build has been released yet.
+title: "Bug: "
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **No build of Skipper has been released yet.** There is nothing to install or run, so there is no bug to report today. This form is prepared for when a first build is published.
+
+        If a document is wrong, unclear or contradicts another one, use "Design feedback" instead.
+
+        A bug in Claude Code itself, not in Skipper, belongs to Anthropic: report it inside Claude Code with `/feedback`. A security problem in Claude Code goes to Anthropic first, as `SECURITY.md` describes under "Problems in Claude Code".
+
+        Reports sent through this form before a build is published may be closed.
+
+        This is not the place for security problems. Those are reported privately, as `SECURITY.md` describes. Never put credentials, tokens, session transcripts or personal data in an issue.
+  - type: checkboxes
+    id: released
+    attributes:
+      label: A build is published
+      options:
+        - label: A released build of Skipper exists, and I ran it.
+          required: true
+  - type: input
+    id: version
+    attributes:
+      label: Skipper version
+      description: The version or commit shown in the program.
+    validations:
+      required: true
+  - type: input
+    id: system
+    attributes:
+      label: Windows version and Claude Code version
+    validations:
+      required: true
+  - type: input
+    id: tier
+    attributes:
+      label: Tier shown on the role's card
+      description: The tier and the network state, as the card shows them. Write "not shown" if the card shows none.
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Start from an empty demo workspace if you can. Use only dummy sessions.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happened instead
+      description: Add the exact text of any message. Remove anything private first.
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Before you send
+      options:
+        - label: This is not a security problem, and it contains no credentials, tokens, session transcripts or personal data.
+          required: true

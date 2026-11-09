@@ -1,0 +1,58 @@
+name: Design feedback
+description: Point out a mistake, a gap, a risk or an unclear passage in the design documents.
+title: "Design: "
+labels: ["design", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Skipper is in active development and not released, so this form is about the documents: the README, the glossary and the other documents in this repository. The design document follows with the code (documents first).
+
+        Contributions are not open yet (see `CONTRIBUTING.md`). Feedback is read, but replies are best effort and may be slow.
+
+        Questions about the design are welcome here: choose "A question" below. Where other questions go is described in `SUPPORT.md`.
+
+        Every decision in the design carries a mark. A decision marked "(owner decision)" can only be changed by the owner. A decision marked "(maintainer's call)" can be challenged with a reason. A question marked "(open – owner decides)" is not settled yet. A detail marked "(left to the builder)" may be chosen by whoever builds it.
+
+        This is not the place for security problems. Those are reported privately, as `SECURITY.md` describes. Never put credentials, tokens, session transcripts or personal data in an issue.
+  - type: input
+    id: where
+    attributes:
+      label: Where
+      description: The file and the section, for example a section of the README or a glossary entry. The design document follows with the code, so name its section once it is here.
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of feedback is it?
+      options:
+        - A mistake or a contradiction
+        - Something is missing
+        - Unclear wording
+        - A risk or a limit that is not covered
+        - A suggestion
+        - A question
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What did you notice?
+      description: Say what is wrong, missing or unclear, and why it matters.
+    validations:
+      required: true
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: What would you change?
+      description: Optional. A short proposal in your own words. Please do not paste text from other projects.
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Before you send
+      options:
+        - label: I read the part of the documents and the glossary that this is about (the design document follows with the code).
+          required: true
+        - label: This is not a security problem, and it contains no credentials, tokens, session transcripts or personal data.
+          required: true

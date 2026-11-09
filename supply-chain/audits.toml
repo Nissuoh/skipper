@@ -1,0 +1,8 @@
+# cargo-vet audits of Skipper.
+#
+# No audit of our own yet: every registry package of Cargo.lock is exempted in supply-chain/config.toml (the initial pin
+# set, not audited; 7-day wait waived until version 1). The organisations in its [imports.*] are configured, but their
+# audits count only once supply-chain/imports.lock is committed. A full audit of a package (`cargo vet certify`) is
+# written here by the maintainer and replaces that package's exemption.
+
+[audits]

@@ -1,0 +1,92 @@
+# Skipper – files that must never be committed.
+# This file is a second layer. The first layer is the explicit list of paths
+# that may be committed at all; everything else is forbidden by default.
+
+# --- Rust and Cargo build output ---
+# Cargo.lock is NOT ignored: builds use --locked, so the lock file is committed.
+target/
+**/*.rs.bk
+*.pdb
+*.profraw
+mutants.out*/
+
+# --- Generated documentation and release output ---
+/book/
+/dist/
+/out/
+
+# --- Secrets, credentials and keys ---
+# Skipper never handles credentials, and neither may the repository.
+# The push gate (`cargo xtask leak-scan`) refuses the same names even when a file was added with `git add -f`;
+# keep this block and `secret_name_rule` in xtask/src/leak.rs equal.
+.env
+.env.*
+# The one env file that may be committed: it lists names and holds no value (the gate looks at its content).
+!.env.example
+*.env
+.credentials.json
+credentials*.json
+.mcp.json
+*.pem
+*.key
+*.p12
+*.pfx
+*.keystore
+*.jks
+id_rsa*
+id_dsa*
+id_ecdsa*
+id_ed25519*
+# A file named secrets or secret with any extension, but not Rust source of that name.
+secrets.*
+!secrets.rs
+secret.*
+!secret.rs
+# Package-manager sign-in files; the gate refuses them as soon as they hold a token.
+.npmrc
+.pypirc
+
+# --- Local workspace and tool configuration ---
+# A person's own roles, accounts, board and settings stay on their machine.
+.skipper/
+skipper-data/
+*.local.toml
+*.local.json
+*.local.yaml
+/local/
+.claude/
+
+# --- Personal data and private notes ---
+# Personal notes, exports and captures can hold names, addresses, cookies or
+# account details. They stay on the machine that made them.
+/private/
+/notes/
+*.private.*
+CLAUDE.local.md
+*.local.md
+.envrc
+*.har
+*.sqlite
+*.sqlite3
+*.db
+
+# --- Logs, dumps and scratch files ---
+*.log
+*.dmp
+*.tmp
+*.bak
+/scratch/
+
+# --- Editors ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# --- Operating system ---
+Thumbs.db
+ehthumbs.db
+desktop.ini
+$RECYCLE.BIN/
+.DS_Store

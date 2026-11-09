@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="96" height="96" viewBox="0 0 96 96" role="img" aria-labelledby="t">
+  <title id="t">A chip with pins</title>
+  <rect width="96" height="96" rx="22" fill="#161616"/>
+  <rect x="30" y="30" width="36" height="36" rx="6" fill="none" stroke="#F2F2F2" stroke-width="5"/>
+  <path d="M40 20V30M56 20V30M40 66V76M56 66V76M20 40H30M20 56H30M66 40H76M66 56H76" fill="none" stroke="#F2F2F2" stroke-width="5" stroke-linecap="round"/>
+  <rect x="42" y="42" width="12" height="12" rx="3" fill="#7AAAFF"/>
+</svg>

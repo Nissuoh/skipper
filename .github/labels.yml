@@ -1,0 +1,51 @@
+# The labels of CONTRIBUTING.md rule 9. GitHub does not read this file. The
+# maintainer uses it as the checklist when creating the labels, and the issue
+# forms only apply labels that exist. Keep it in step with rule 9.
+- name: bug
+  color: "d73a4a"
+  description: Something in a released build does not work
+- name: design
+  color: "5319e7"
+  description: Feedback on the design documents
+- name: documentation
+  color: "0075ca"
+  description: A change or proposal for a document
+- name: question
+  color: "d876e3"
+  description: A question, not a change
+- name: needs-triage
+  color: "fbca04"
+  description: New, not read yet
+- name: needs-info
+  color: "e4e669"
+  description: Waiting for the reporter
+- name: blocked-on-probe
+  color: "f9d0c4"
+  description: Only a probe on real Windows can settle it
+- name: decided
+  color: "0e8a16"
+  description: Answered by a design change or a recorded decision
+- name: duplicate
+  color: "cfd3d7"
+  description: Covered by another issue
+- name: wontfix
+  color: "ffffff"
+  description: Will not be changed, with a reason given
+- name: stage-0
+  color: "bfdadc"
+  description: Roadmap stage 0
+- name: stage-1
+  color: "bfdadc"
+  description: Roadmap stage 1
+- name: stage-2
+  color: "bfdadc"
+  description: Roadmap stage 2
+- name: stage-3
+  color: "bfdadc"
+  description: Roadmap stage 3
+- name: good first issue
+  color: "7057ff"
+  description: Small and well described, suited to a first contribution
+- name: help wanted
+  color: "008672"
+  description: The maintainer would welcome a contribution

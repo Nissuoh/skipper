@@ -1,0 +1,13 @@
+# Blank issues are off. Choose one of the templates, or use the links below
+# for questions, for chat and for security problems.
+blank_issues_enabled: false
+contact_links:
+  - name: Questions and help
+    url: https://github.com/Nissuoh/skipper/blob/HEAD/SUPPORT.md
+    about: Where questions go, and where problems with Claude Code itself or your Claude account belong.
+  - name: Ask a question on Discord
+    url: https://discord.gg/9kggrpKCvQ
+    about: Join the Skipper server. Ask in the help forum and share ideas in the ideas forum. Never post credentials, tokens or session transcripts there, and never report a vulnerability there.
+  - name: Report a security problem (private)
+    url: https://github.com/Nissuoh/skipper/security/advisories/new
+    about: Never put a vulnerability in a public issue. Use the repository's Security tab, "Report a vulnerability". SECURITY.md has the details and the fallback.

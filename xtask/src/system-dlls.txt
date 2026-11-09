@@ -1,0 +1,48 @@
+# Windows system DLLs that a clean Windows 10 and Windows 11 both have (plan Task 17 Step 3; builder's call).
+# Read by `cargo xtask pe-check` (xtask/src/pe.rs) through include_str!.
+# One name per line, without the .dll ending; letter case is ignored; a trailing * means "starts with".
+# `api-ms-win-*` is special: it accepts the API-set names only (api-ms-win-<contract>-l<n>-<n>-<n>, for
+# example api-ms-win-core-synch-l1-2-0), never a name with a path character, a dot or an empty part.
+# The list is applied to the delay-load imports too (a DLL loaded on first use is an import all the same).
+# No lib*.dll here: a mingw runtime DLL (libwinpthread, libgcc_s, libstdc++) is never a system DLL.
+kernel32
+user32
+gdi32
+advapi32
+ntdll
+shell32
+ole32
+oleaut32
+comdlg32
+imm32
+uxtheme
+dwmapi
+opengl32
+d3d11
+d3d12
+dxgi
+dcomp
+bcrypt
+bcryptprimitives
+crypt32
+credui
+userenv
+ws2_32
+msvcrt
+ucrtbase
+shlwapi
+winmm
+propsys
+setupapi
+cfgmgr32
+hid
+version
+iphlpapi
+psapi
+wtsapi32
+# PE-1 (probe PRB-63, 07.11.), both in System32 of every clean Windows 10 and 11: combase is the COM core (Windows 8 and later; the
+# windows-sys and windows-core COM calls such as CoTaskMemFree and CoIncrementMTAUsage import it), uiautomationcore is UI
+# Automation (Windows XP and later; the screen-reader bridge of eframe's accesskit feature, MC-35, imports it).
+combase
+uiautomationcore
+api-ms-win-*

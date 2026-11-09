@@ -1,0 +1,46 @@
+[package]
+name = "xtask"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish = false
+# `cargo xtask` (the alias in .cargo/config.toml) runs `cargo run -p xtask`; with a second binary it needs a default.
+default-run = "xtask"
+
+# The library holds the guard and the modules that more than one binary uses. `xtask.exe`, the push gate's scanner, links
+# no network code.
+[lib]
+name = "xtask"
+path = "src/lib.rs"
+
+# The push gate's scanner and the project's own checks.
+[[bin]]
+name = "xtask"
+path = "src/main.rs"
+
+# The entry of the catalogue job: fetch, build and publish of the model catalogue, and the docs fetch, on a GitHub-hosted
+# runner or in the cap. Built only with the feature `catalog-ci`; `default-run` stays `xtask`.
+[[bin]]
+name = "xtask-catalog"
+path = "src/bin/xtask-catalog.rs"
+required-features = ["catalog-ci"]
+
+[dependencies]
+serde = { workspace = true, features = ["derive"] }
+serde_json.workspace = true
+sha2.workspace = true
+toml.workspace = true
+
+# Job objects, security, threading: the guard.
+[target.'cfg(windows)'.dependencies]
+windows-sys = { workspace = true, features = [
+    "Win32_Foundation",
+    "Win32_Security",
+    "Win32_System_JobObjects",
+    "Win32_System_Threading",
+] }
+
+# `catalog-ci` builds `xtask-catalog` and `xtask::catalog_net`.
+# Its list is empty in the documents-first repository: the product crates behind it are added with their code.
+[features]
+catalog-ci = []

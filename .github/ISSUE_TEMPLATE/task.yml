@@ -1,0 +1,41 @@
+name: Task or documentation change
+description: Propose a change to a document, or a small piece of work, with its scope.
+title: "Task: "
+labels: ["documentation", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Every change starts from an issue (see `docs/github-workflow.md`). Use this form for a change to a document or a small piece of work that you or the maintainer will do in one small pull request. For a mistake or a gap in the design, use "Design feedback" instead.
+
+        Contributions are not open yet (see `CONTRIBUTING.md`). A proposal is read, but replies are best effort and may be slow.
+
+        This is not the place for security problems. Those are reported privately, as `SECURITY.md` describes. Never put credentials, tokens, session transcripts or personal data in an issue.
+  - type: input
+    id: where
+    attributes:
+      label: Where
+      description: The file and the section the change is about.
+    validations:
+      required: true
+  - type: textarea
+    id: change
+    attributes:
+      label: What should change, and why
+      description: Say what the change is and the problem it solves. Keep it to one topic.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: How big is it
+      description: Which files it touches, and roughly how many lines. A pull request is at most 400 changed lines; a bigger task is split into several.
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Before you send
+      options:
+        - label: This is one topic, and it is not a security problem.
+          required: true
+        - label: It contains no credentials, tokens, session transcripts or personal data, and no text copied from other projects.
+          required: true

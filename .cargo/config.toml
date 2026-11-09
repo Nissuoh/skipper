@@ -1,0 +1,22 @@
+# Build settings. jobs = 6 stays within the 8 processors of the cap.
+[build]
+jobs = 6
+
+# The toolchain's own LLD (rust-lld in MinGW mode) links instead of the self-contained GNU ld: GNU ld leaves
+# part of the import thunks outside every import descriptor when several short import libraries (raw-dylib, written
+# by llvm-dlltool) name the same DLL, and such a binary dies at start. The CRT objects and libraries stay the
+# self-contained ones. Static runtime, so no mingw DLL is imported.
+[target.x86_64-pc-windows-gnu]
+linker = "rust-lld"
+rustflags = [
+    "-C", "linker-flavor=ld.lld",
+    "-C", "link-self-contained=yes",
+    "-C", "target-feature=+crt-static",
+    "-C", "link-arg=--dynamicbase",
+    "-C", "link-arg=--nxcompat",
+    "-C", "link-arg=--high-entropy-va",
+    "-C", "link-arg=--no-insert-timestamp",
+]
+
+[alias]
+xtask = "run --locked --offline -q -p xtask --"

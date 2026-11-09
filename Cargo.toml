@@ -1,0 +1,46 @@
+# Skipper - Cargo workspace.
+[workspace]
+resolver = "3"
+# Documents first: the product crates join this list with their code, in small reviewed pull requests.
+members = ["xtask"]
+
+[workspace.package]
+version = "0.1.0-test.6"
+edition = "2024"
+license = "MIT"
+publish = false
+
+# Exact "=" pins. Each version also stands in supply-chain/pins.toml with its release date.
+# serde, serde_json, sha2, tokio and toml were chosen on the pin day, 2026-10-22: the newest release that is at least
+# 7 days old on 2026-10-27. The owner waived the 7-day wait for the Stage 0 start, so the lock file was resolved on the
+# pin day itself.
+# Stage 1 additions, resolved 2026-10-23: egui_commonmark, egui_kittest, pulldown-cmark. Built without the 7-day wait
+# under the owner's waiver (supply-chain/pins.toml). pulldown-cmark is 0.13.5 (2026-10-21), not 0.13.4:
+# it fixes panics and denial-of-service paths of the Markdown parser.
+# No direct vte (alacritty_terminal::vte is used), no schemars, crates.io only, no git source.
+[workspace.dependencies]
+alacritty_terminal = "=0.26.0"
+bollard = { version = "=0.21.1", default-features = false }
+crc32fast = "=1.5.3"
+eframe = { version = "=0.37.0", default-features = false }
+egui = "=0.37.0"
+egui_commonmark = { version = "=0.26.0", default-features = false }
+egui_kittest = { version = "=0.37.0", default-features = false }
+egui_tiles = "=0.18.0"
+mxc-sdk = "=1.0.1"
+portable-pty = "=0.9.0"
+pulldown-cmark = { version = "=0.13.5", default-features = false }
+rmcp = { version = "=3.6.0", default-features = false }
+serde = "=1.0.229"
+serde_json = "=1.0.154"
+sha2 = "=0.11.1"
+tokio = { version = "=1.53.3", default-features = false }
+toml = "=1.1.8"
+unicode-segmentation = "=1.13.3"
+uuid = "=1.28.0"
+windows-sys = "=0.61.2"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+debug = false
