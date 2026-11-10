@@ -16,14 +16,14 @@ The other pages: [install guide](install.md), [probe guide](probe-guide.md), [te
 
 The settings below are made on github.com and are not files, so no check in this repository can prove them. Do them in this order. Write the date next to each one when it is done and verified, and announce no link before every line has a date.
 
-1. [ ] Private vulnerability reporting is on. Verify in a logged-out window that "Report a vulnerability" shows on the Security tab. Date: ____
+1. [ ] Private vulnerability reporting is on. Verify in a logged-out window that "Report a vulnerability" shows on the Security tab. Date: 2026-11-10
 2. [ ] Secret scanning and push protection are on; the dependency graph, Dependabot alerts and security updates are on. Date: ____
 3. [ ] The ruleset on `main` requires a pull request and a linear history, and forbids force-push and deletion. Required approvals: 0 while there is one maintainer, 1 once a co-maintainer exists. The code-owner review is not required while there is one maintainer (CODEOWNERS is informational then); switch it on when a co-maintainer exists. There is no bypass list. Verify that the maintainer can merge their own pull request. Add the required status checks once a workflow exists. Date: ____
 4. [ ] Only squash merge is allowed, with the pull request title and description as the message. Merge commits and rebase merging are off, and head branches are deleted after the merge. Date: ____
-5. [ ] Only the maintainer has write access. Invited collaborators have triage or read access and work from forks. Pull request creation is limited to collaborators if the plan offers that option. Date: ____
-6. [ ] Actions are disabled or restricted, and the default workflow token is read-only. Date: ____
-7. [ ] Discussions, the wiki and projects are off. Blank issues are off (`.github/ISSUE_TEMPLATE/config.yml`). Date: ____
-8. [ ] Every label of CONTRIBUTING.md rule 9 exists, so the issue forms can apply them. Date: ____
+5. [ ] Only the maintainer has write access. Invited collaborators have triage or read access and work from forks. Pull request creation is limited to collaborators if the plan offers that option. Date: 2026-11-10
+6. [ ] Actions are disabled or restricted, and the default workflow token is read-only. Date: 2026-11-10
+7. [ ] Discussions, the wiki and projects are off. Blank issues are off (`.github/ISSUE_TEMPLATE/config.yml`). Date: 2026-11-10
+8. [ ] Every label of CONTRIBUTING.md rule 9 exists, so the issue forms can apply them. Date: 2026-11-10
 9. [ ] Tag protection and immutable releases are on. The Releases page is the only trusted source. Date: ____
 10. [ ] The repository description, the topics and the social preview say that Skipper is independent and not affiliated with, endorsed by or sponsored by Anthropic. The same line is in the release notes template and in the descriptions of the community spaces. Date: ____
 11. [ ] The owner account uses two-factor sign-in with a hardware key, the recovery codes are stored offline, and a recovery route is planned. Date: ____
