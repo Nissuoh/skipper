@@ -17,8 +17,8 @@ Every role is a visible terminal, the work runs through one board, and resource 
 
 </div>
 
-> **Status as of 0.1.0-test.6 (2026-11-09): in active development, not released. There is nothing to install yet.**
-> This repository holds the documents, the project rules and the check tool (`xtask/`). The Rust source code follows step by step in small reviewed pull requests, so most of what these pages describe is not public yet; [docs/code-arrival.md](docs/code-arrival.md) says how it arrives. The current version is 0.1.0-test.6, a test build for the project's own testing that is not published. The features on this page are the 1.0 plan and may still change; [What is built today](#what-is-built-today) says which of them exist in code. Windows only.
+> **Status as of 0.1.0-test.9 (2026-11-11): in active development, not released. There is nothing to install yet.**
+> This repository holds the documents, the project rules and the check tool (`xtask/`). The Rust source code follows step by step in small reviewed pull requests, so most of what these pages describe is not public yet; [docs/code-arrival.md](docs/code-arrival.md) says how it arrives. The current version is 0.1.0-test.9, a test build for the project's own testing that is not published. The features on this page are the 1.0 plan and may still change; [What is built today](#what-is-built-today) says which of them exist in code. Windows only.
 >
 > **What you can do today.** Read the documents, ask a question or give design feedback in an issue, and watch the repository. Pull requests are not open yet (see [CONTRIBUTING.md](CONTRIBUTING.md)). Paths that these documents name, such as `crates/`, `docs/design/`, `docs/probes/` and `.github/workflows/`, do not exist here yet.
 
@@ -87,7 +87,7 @@ Skipper is not an AI agent of its own and makes no model calls. It does not repl
 
 ## What is built today
 
-Status as of 0.1.0-test.6 (2026-11-09). "Built, code not yet public" means that the code and its automated tests exist; the source follows in this repository, documents first. It does not mean proven: no probe counts yet, because the stage 1 checker (`cargo xtask stage1-check`, which runs once the code and the probe sheets are published) keeps every item open, and nothing is released. Everything else on this page is the 1.0 plan.
+Status as of 0.1.0-test.9 (2026-11-11). "Built, code not yet public" means that the code and its automated tests exist; the source follows in this repository, documents first. It does not mean proven: no probe counts yet, because the stage 1 checker (`cargo xtask stage1-check`, which runs once the code and the probe sheets are published) keeps every item open, and nothing is released. Everything else on this page is the 1.0 plan.
 
 | Part | Status |
 |---|---|
@@ -95,7 +95,7 @@ Status as of 0.1.0-test.6 (2026-11-09). "Built, code not yet public" means that 
 | The starter team (eight roles) and the empty start | Built, code not yet public. |
 | The board, the task board and the knowledge base | Built, code not yet public. |
 | The final approval by a person's click, and the push check | Built, code not yet public. |
-| Pacing, with holds on new starts | Built, code not yet public. On by default, in the mode "suggest". |
+| Pacing, with holds on new starts | Built, code not yet public. On by default. The ninth test build starts in the mode "suggest"; later builds start in the mode "hold-fill". |
 | Accounts shared with you, the weekly table and the weekly warnings | Built, code not yet public. Skipper never pushes an account that it sees you use outside Skipper, or that you mark as shared with a line in a file (there is no button for the mark yet). The Accounts page has a weekly table, and Needs you warns at 85 % and at 93 % of an account's week. |
 | The hardware scan, the caps and the reserve | Built, code not yet public. |
 | Model settings, and the automatic choice of model and effort | Built, code not yet public. The automatic choice is on by default. Each role card holds the limits of the choice: where the role's start row comes from, the lowest and highest model and effort, and when ultracode and ultrathink may start. |
@@ -104,7 +104,8 @@ Status as of 0.1.0-test.6 (2026-11-09). "Built, code not yet public" means that 
 | Import from files | Built, code not yet public for a folder or ZIP of Markdown or Obsidian files, a Notion export ZIP and a Trello export. An import can go into a new project. |
 | The maintainer role for outside pull requests and issues | Built, code not yet public. |
 | Several projects open at once | Built, code not yet public. |
-| Automatic choice of account, and continuing a role on another of your own accounts at a limit | In development, not working, not promoted. |
+| Automatic choice of account | Built, code not yet public. For a role whose account is set to automatic, Skipper picks one of your own signed-in accounts. |
+| Continuing a role on another of your own accounts at a limit | In development, not released, not promoted. |
 | Updates | Built, code not yet public. Skipper looks for updates by itself while the setting is on, which is the default. The release source is empty until the first release is published, so nothing is fetched from the network, and a test build only looks into a folder on your PC. |
 | English and German, light and dark | Built, code not yet public. |
 | Import from Linear, GitHub Issues or Notion through their services | Built, code not yet public, but never tried against the real service, so the tiles of Linear and GitHub Issues and the button for the Notion API carry the badge "new". The import window saves one sign-in for the import, and Skipper's sign-in helper reads the service. |
@@ -256,7 +257,7 @@ Docker and a Linux tier through WSL are optional extras for later, only where yo
 
 These four rules are fixed in code. No setting, flag or role template can turn them off. (owner decision) The one exception, also an owner decision: Claude Code's background sessions run through Claude Code's own service and may keep running after Skipper's window closes, so they are a switch per role, off by default; only you can turn it on, and the role then shows it.
 
-1. **No account is put at risk.** Skipper never reads, stores, copies or sends your Claude credentials or session tokens. (The sealed vault for the sign-ins of outside services is described under Connections; it holds nothing for a Claude account.) It uses only accounts you own. In the current test build a role runs on the account it is given and, at a limit, Skipper shows the waiting time; choosing an account for a role by itself and continuing a role on another of your own accounts at a limit are in development.
+1. **No account is put at risk.** Skipper never reads, stores, copies or sends your Claude credentials or session tokens. (The sealed vault for the sign-ins of outside services is described under Connections; it holds nothing for a Claude account.) It uses only accounts you own. A role runs on the account you give it, or on one of your own accounts that Skipper picks when you set the role to automatic. Continuing a role on another of your own accounts at a limit is in development and not promoted.
 2. **Nothing runs invisibly.** Every role has a visible panel or card. Skipper itself starts no hidden service, adds no autostart and revives nothing after a crash; the only exception is the background-sessions switch above.
 3. **Nothing reaches the main branch or the internet without a person's yes.** Only a person gives the final approval, by a click in Skipper's own window. A message from a role never counts as a yes.
 4. **The PC does not freeze.** Windows always keeps a reserve of memory and cores, and the reserve can never be zero.
@@ -283,16 +284,16 @@ These rules are fixed in the design and apply to the first version:
 
 ## Accounts
 
-Skipper does not yet pick or switch accounts for you; a role runs on the account it is given. Automatic multi-account management is in development, not working and not promoted. It is meant to work like this: when one of your accounts reaches its limit, Skipper can continue a role on another of your own signed-in accounts. Check that this fits the terms of your plan.
+Skipper can pick one of your own accounts for a role whose account is set to automatic. Continuing a role on another of your own accounts at a limit is in development, not released and not promoted. It is meant to work like this: when one of your accounts reaches its limit, Skipper can continue a role on another of your own signed-in accounts. Check that this fits the terms of your plan.
 
-Every role points to one account, which you set by hand. Two setups are possible, and they can be mixed:
+Every role points to one account, which you set by hand or leave to Skipper's automatic choice. Two setups are possible, and they can be mixed:
 
 - **One account for all roles.** This is the intended default, because not everyone can pay for several subscriptions. Setup starts with a single account that all roles share. Adding more accounts is optional. (maintainer's call)
 - **Your own accounts for individual roles.** A role, or a group of roles, can have its own subscription and its own sign-in. Giving roles different accounts by hand works; Skipper does not manage it for you and does not promote it until Anthropic has answered the project's written questions (design section 9.3).
 
 A mixed setup is possible too, for example the lead on account A while backend and frontend share account B.
 
-Roles that share an account share its usage limit. Skipper shows this on the cards as "shared by N roles". Skipper does more than show usage: its pacing can hold new starts on an account, such as a role taking its next task or starting a helper. Pacing is on by default and can be switched off per account; then Skipper only shows the usage bar. In the default mode, suggest, a hold comes only from your click on "Hold now". In the modes hold and hold-fill, Skipper also holds new starts by itself, for example at the limit or while the account is ahead of its pacing line. A hold covers the account in every project on the PC. Your own click is never held, running work is never paused or stopped, and pacing never moves work to another account, because Skipper does not do that yet.
+Roles that share an account share its usage limit. Skipper shows this on the cards as "shared by N roles". Skipper does more than show usage: its pacing can hold new starts on an account, such as a role taking its next task or starting a helper. Pacing is on by default and can be switched off per account; then Skipper only shows the usage bar. In the mode suggest (the default of the ninth test build; later builds default to hold-fill), a hold comes only from your click on "Hold now". In the modes hold and hold-fill, Skipper also holds new starts by itself, for example at the limit or while the account is ahead of its pacing line. A hold covers the account in every project on the PC. Your own click is never held, running work is never paused or stopped, and pacing never moves work to another account, because Skipper does not do that yet.
 
 The weekly limit counts too. The Accounts page has a weekly table with each account's share of its week, the day its week resets and its share of the last five hours. Needs you warns once per weekly window at 85 % of the week and once at 93 %, or when the pace of the last 24 hours projects 93 % by the weekly reset. When the week reaches 93 %, or is projected to, the weekly gate closes: the account is offered no extra work, in the modes hold and hold-fill its new starts are held, and the gate lets go at the weekly reset at the latest.
 
@@ -352,7 +353,7 @@ No dates. Each stage ends with a concrete check before the next one begins.
 2. **Team features.** Fuller editors for roles, accounts and rights, flows with versions, the full approval ladder, a view of where flows stall, the "Build cycle" starter flow, a timeline, tested connection templates such as GitHub, and an end-of-day routine that stops all roles cleanly. Also export as Markdown or CSV, and import of tasks and pages from files you export yourself: Markdown or Obsidian files, a Notion export ZIP and a Trello export are built; Linear, GitHub Issues and the Notion API are in code but not yet tried against the real services; Jira Cloud is not built. Imports run only on your click and show a preview first. Skipper is not affiliated with any of these services. The check: someone who has never seen the project sets up a lead and two roles without help, once with one account and once with two.
 3. **Public release.** A signed installer, documentation, and a security and cleanliness review of everything in the repository. The check: a stranger sets Skipper up with the README alone in under 15 minutes. When this stage starts is (open – owner decides).
 
-Status as of 0.1.0-test.6 (2026-11-09): the stage 1 product is built in code, and so are parts of stage 2 (see [What is built today](#what-is-built-today)). No stage check has been passed yet: the probe sheet of stage 0 is unanswered, and the probe sheet of stage 1 has no answered row that counts. Both sheets follow with the code, and the checker runs once they are here.
+Status as of 0.1.0-test.9 (2026-11-11): the stage 1 product is built in code, and so are parts of stage 2 (see [What is built today](#what-is-built-today)). No stage check has been passed yet: the probe sheet of stage 0 is unanswered, and the probe sheet of stage 1 has no answered row that counts. Both sheets follow with the code, and the checker runs once they are here.
 
 Support for further coding tools, for example OpenAI Codex, is considered only after that. It is a plan for later and not a promise.
 
